@@ -1,0 +1,112 @@
+<div class="d-flex flex-row gap-5 w-full  ">
+  <div>
+    <button class="btn btn-primary" (click)="Add()">Add</button>
+  </div>
+  <div>
+    <button class="btn btn-success" (click)="ExportExcel()">Export Excel</button>
+  </div>
+  <div>
+    <button class="btn btn-danger" (click)="ExportPDF()">Export PDF</button>
+  </div>
+</div>
+<ng-container *ngIf = "notFound!= true; then thenblock; else elseblock">
+</ng-container>
+<ng-template #thenblock>
+  <table class="table m-5" id="table-staff">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Birthday</th>
+        <!-- <th scope="col">Action</th> -->
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let staff of staffs">
+        <th scope="row">{{staff.id}}</th>
+        <td>{{staff.name}}</td>
+        <td>{{staff.gender}}</td>
+        <td>{{staff.birthday}}</td>
+        <td class="d-flex flex-row gap-2">
+          <button class="btn btn-warning"  type="button" (click)="Edit(staff.id)">Edit</button>
+          <button class="btn btn-danger" type="button" (click)="Delete(staff.id)">Delete</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #elseblock >{{not_found_msg}}</ng-template>
+<ng-container *ngIf="isEdit == true">
+
+  <div class="d-flex flex-colum m-5">
+    <form  role="search" >
+      <div>
+        <label>StaffID</label>
+        <p>{{personalInfo.id}}</p>
+      </div>
+    <div>
+          <label>Name</label>
+      <input class="form-control me-2" type="text" value="{{personalInfo.name}}" placeholder="Search" [formControl]="name" >
+    </div>
+    <div>
+      <select class="form-select" aria-label="gender" [formControl]="gender" >
+   
+        <option value="2" [selected]="personalInfo.gender=='female'?'true':'false'">Female</option>
+        <option value="1" [selected]="personalInfo.gender=='male'?'true':'false'">Male</option>
+     
+      </select>
+    </div>   
+    <div>
+      <label>Birthday: {{personalInfo.birthday}}</label>
+      <input class="form-control me-2" value = "{{personalInfo.birthday}}" type="datetime-local" placeholder="Search" [formControl]="birthday" aria-label="Birthday">
+  
+    </div>
+  
+  
+  
+      <button class="btn btn-outline-success m-3" type="button" (click)="EditConfirm(personalInfo.id)">Edit</button>
+      <button class="btn btn-danger m-3" (click)="Close()">Close</button>
+    </form>
+  </div>
+
+</ng-container>
+
+
+<ng-container *ngIf="isAdd == true">
+
+  <div class="d-flex flex-colum m-5">
+    <form  role="search" >
+      <div>
+        <label>StaffID</label>
+        <input class="form-control me-2" type="text"  placeholder="Search" [formControl]="staff_id" >
+      </div>
+    <div>
+          <label>Name</label>
+      <input class="form-control me-2" type="text" placeholder="Search" [formControl]="name" >
+    </div>
+    <div>
+      <select class="form-select" aria-label="gender" [formControl]="gender" >
+      
+        <option value="2" >Female</option>
+        <option value="1">Male</option>
+     
+      </select>
+    </div>   
+    <div>
+      <label>Birthday: </label>
+      <input class="form-control me-2" value = "{{personalInfo.birthday}}" type="datetime-local" placeholder="Search" [formControl]="birthday" aria-label="Birthday">
+  
+    </div>
+  
+  
+  
+      <button class="btn btn-outline-success m-3" type="button" (click)="AddConfirm(personalInfo.id)">Add</button>
+      <button class="btn btn-danger m-3" (click)="Close()">Close</button>
+    </form>
+  </div>
+
+</ng-container>
+
+
